@@ -1,4 +1,4 @@
-const VERSION='1.0.2',STORE='nzPilotLogMobile.v1',XLSX_NS='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
+const VERSION='1.0.3',STORE='nzPilotLogMobile.v1',XLSX_NS='http://schemas.openxmlformats.org/spreadsheetml/2006/main';
 const DEFAULT={settings:{pilotName:'',secondName:'',clientNo:'',defaultPic:'Self',other16Label:'AS FLIGHT INSTRUCTOR',other17Label:'IFR CROSS COUNTRY',aircraft:[{type:'GA8',reg:'',engineClass:'single'},{type:'C206',reg:'',engineClass:'single'}],commonDetails:[],lastExcelName:'',lastSyncAt:0},flights:[]};
 const $=id=>document.getElementById(id),clone=o=>JSON.parse(JSON.stringify(o));
 function load(){try{const x=JSON.parse(localStorage.getItem(STORE)||'null');if(x&&x.settings&&Array.isArray(x.flights)){const d=clone(DEFAULT);d.settings=Object.assign(d.settings,x.settings);d.flights=x.flights;return d}}catch{}return clone(DEFAULT)}let db=load();
