@@ -4,7 +4,7 @@ function caaColumnsFor(f){const a=Array(17).fill(0),engine=f.engineClass||'singl
 function detailsFor(f){return String(f.details||f.detailsRaw||'').trim()}
 function activeFlights(){return db.flights.filter(f=>!f.deleted)}
 function pendingFlights(){return activeFlights().filter(f=>f.syncStatus!=='synced')}
-function switchTab(name){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===name));document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('on',b.dataset.go===name));window.scrollTo({top:0,behavior:'instant'});if(name==='add'&&!$('date').value)$('date').value=today();if(name==='sync')renderSync()}
+function switchTab(name){document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active',p.id===name));document.querySelectorAll('.navbtn').forEach(b=>b.classList.toggle('on',b.dataset.go===name));$('fab')?.classList.toggle('hidden',name==='sync'||name==='settings');window.scrollTo({top:0,behavior:'instant'});if(name==='add'&&!$('date').value)$('date').value=today();if(name==='sync')renderSync()}
 document.addEventListener('click',e=>{const b=e.target.closest('[data-go]');if(b)switchTab(b.dataset.go)});$('fab').onclick=()=>switchTab('add');
 let functionValue='PIC',dayNightValue='day',saveNextRequested=false;
 function setSeg(root,val){[...root.querySelectorAll('button')].forEach(b=>b.classList.toggle('on',b.dataset.v===val))}
