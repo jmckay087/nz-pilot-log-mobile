@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en-NZ">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
+<meta name="theme-color" content="#0b1f33">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="NZ Pilot Log">
+<title>NZ Pilot Log Mobile</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="stylesheet" href="app.css">
+</head>
+<body>
+<div class="app">
+<header class="topbar"><div class="toprow"><div class="logo">✈︎</div><div class="brand"><strong>NZ Pilot Log</strong><small>iPhone quick logger</small></div><div class="pilot"><strong id="headerPilot">Pilot</strong><small id="headerClient">CAA —</small></div></div></header>
+<main class="wrap">
+<section id="home" class="panel active">
+  <div class="installtip notice info card"><strong>Install on iPhone:</strong> open this page in Safari, tap Share, then <strong>Add to Home Screen</strong>. Once installed, it works offline.</div>
+  <div class="statgrid"><div class="stat"><div class="label">Phone entries</div><div class="value" id="statEntries">0</div><div class="sub">stored locally</div></div><div class="stat"><div class="label">Waiting for Excel</div><div class="value" id="statPending">0</div><div class="sub">queued flights</div></div><div class="stat"><div class="label">Phone flight time</div><div class="value" id="statHours">0.0</div><div class="sub">hours</div></div><div class="stat"><div class="label">Last Excel sync</div><div class="value" id="statLastSync">—</div><div class="sub">confirmed save</div></div></div>
+  <div class="card"><div class="row"><div><h2>Quick log</h2><div class="muted">Log flights now, even offline. Sync several flights to your iCloud Excel logbook later.</div></div><div class="spacer"></div><button class="primary" data-go="add">Add flight</button></div><div class="quick" style="margin-top:12px"><div class="quick-title">Aircraft</div><div id="homeAircraft" class="chips"></div><div class="quick-title" style="margin-top:9px">Common Details of Flight</div><div id="homeDetails" class="chips"></div></div></div>
+  <div class="card"><div class="row"><div><h2>Recent phone entries</h2><div class="muted">These are flights entered on this iPhone.</div></div><div class="spacer"></div><button class="secondary small" data-go="queue">View all</button></div><div id="recentFlights"></div></div>
+</section>
+
+<section id="add" class="panel">
+  <div class="card"><div class="row"><div><h2 id="entryTitle">Add flight</h2><div class="muted">Normal single-engine PIC day flying defaults to CAA column 2.</div></div><div class="spacer"></div><button class="secondary small" id="cancelEdit">Cancel</button></div>
+  <div class="quick" style="margin-top:12px"><div class="quick-title">Aircraft quick pick</div><div id="aircraftChips" class="chips"></div><div class="quick-title" style="margin-top:9px">Common Details of Flight</div><div id="detailChips" class="chips"></div></div>
+  <form id="flightForm" class="form" style="margin-top:14px">
+    <input type="hidden" id="editId">
+    <div class="grid2"><div class="field"><label>Date *</label><input id="date" type="date" required></div><div class="field"><label>Total flight time *</label><input id="totalTime" inputmode="decimal" placeholder="1.1 or 1:06" required></div></div>
+    <div class="grid2"><div class="field"><label>Aircraft type *</label><input id="aircraftType" autocapitalize="characters" placeholder="GA8" required></div><div class="field"><label>Registration *</label><input id="registration" autocapitalize="characters" placeholder="ZK-___" required></div></div>
+    <div class="field"><label>Details of Flight *</label><input id="details" placeholder="e.g. WF - MF// - WF//" required></div>
+    <div class="field"><label>Pilot function *</label><div class="seg" id="functionSeg"><button type="button" data-v="PIC" class="on">PIC</button><button type="button" data-v="Student">Student</button><button type="button" data-v="Co-pilot">Co-pilot</button><button type="button" data-v="PIC/US">PIC/US</button></div></div>
+    <div class="field"><label>Day / night *</label><div class="seg" id="dayNightSeg"><button type="button" data-v="day" class="on">All day</button><button type="button" data-v="night">All night</button><button type="button" data-v="split">Split</button></div></div>
+    <div id="splitFields" class="grid2 hidden"><div class="field"><label>Day time</label><input id="dayTime" inputmode="decimal" placeholder="0.8"></div><div class="field"><label>Night time</label><input id="nightTime" inputmode="decimal" placeholder="0.3"></div></div>
+    <div class="field"><label>Take-offs & landings *</label><div class="grid4"><div class="field"><label>Day T/O</label><input id="takeoffsDay" type="number" min="0" step="1" value="1"></div><div class="field"><label>Night T/O</label><input id="takeoffsNight" type="number" min="0" step="1" value="0"></div><div class="field"><label>Day LDG</label><input id="landingsDay" type="number" min="0" step="1" value="1"></div><div class="field"><label>Night LDG</label><input id="landingsNight" type="number" min="0" step="1" value="0"></div></div></div>
+    <details><summary>Duty & CAA / instrument details</summary><div class="form two">
+      <div class="field"><label>Duty start</label><input id="dutyStart" type="time"></div><div class="field"><label>Duty finish</label><input id="dutyEnd" type="time"></div>
+      <div class="field"><label>Engine class</label><select id="engineClass"><option value="single">Single-engine</option><option value="multi">Multi-engine</option></select></div><div class="field"><label>CAA time column</label><select id="caaTimeType"><option value="">Select…</option><option>Dual</option><option selected>PIC</option><option>Co-pilot</option><option>Command practice</option></select></div>
+      <div class="field"><label>Pilot in Command</label><input id="pilotInCommand" placeholder="Self"></div><div class="field"><label>Co-pilot or Student</label><input id="coPilotStudent" placeholder="Self / name"></div>
+      <div class="field"><label>Actual instrument</label><input id="actualInst" inputmode="decimal" placeholder="0.0"></div><div class="field"><label>Simulated instrument</label><input id="simInst" inputmode="decimal" placeholder="0.0"></div>
+      <div class="field"><label>Instrument ground</label><input id="groundInst" inputmode="decimal" placeholder="0.0"></div><div class="field"><label id="other16Label">CAA column 16</label><input id="other16" inputmode="decimal" placeholder="0.0"></div>
+      <div class="field"><label id="other17Label">CAA column 17</label><input id="other17" inputmode="decimal" placeholder="0.0"></div><div class="field"><label>IFR approaches</label><input id="approachCount" type="number" min="0" step="1" value="0"></div>
+      <div class="field full"><label>Approach type(s)</label><input id="approachTypes" placeholder="ILS, RNAV…"></div>
+    </div></details>
+    <div id="formError" class="notice bad hidden"></div>
+    <div class="row"><button type="button" class="secondary" id="clearEntry">Clear</button><div class="spacer"></div><button type="submit" class="secondary" id="saveFinish">Save</button><button type="button" class="primary" id="saveNext">Save + next</button></div>
+  </form></div>
+</section>
+
+<section id="queue" class="panel">
+  <div class="card"><div class="row"><div><h2>Phone log & Excel queue</h2><div class="muted" id="queueSummary">No phone entries yet.</div></div><div class="spacer"></div><button class="primary" data-go="sync">Sync Excel</button></div><div id="queueFlights"></div></div>
+</section>
+
+<section id="sync" class="panel">
+  <div class="card"><h2>Sync to Excel in iCloud</h2><div class="muted">Safari cannot silently overwrite an arbitrary iCloud Drive workbook, so this version asks you to choose the current workbook each time and then save the updated copy back to the same iCloud location.</div>
+    <div class="syncstep">Tap <strong>Choose Excel & prepare update</strong>, then select your current CAANZ Excel Pilot Logbook from iCloud Drive.</div>
+    <div class="syncstep">NZ Pilot Log appends all waiting phone flights to the next safe logbook rows.</div>
+    <div class="syncstep">Use the Share sheet → <strong>Save to Files</strong> → choose the same iCloud Drive folder and the same filename. Choose <strong>Replace</strong> if iOS asks.</div>
+    <div class="syncstep">Return here and confirm that you replaced the workbook. The flights are then marked synced on this phone.</div>
+    <div id="syncStatus" class="notice info" style="margin:12px 0"></div>
+    <button class="primary wide" id="chooseExcel">Choose Excel & prepare update</button><input id="excelFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+    <div id="preparedBox" class="hidden" style="margin-top:12px"><button class="secondary wide" id="shareUpdated">Share / Save updated workbook</button><div class="notice" style="margin-top:10px">Do not confirm until the updated workbook has been saved back over the current iCloud copy.</div><button class="primary wide" style="margin-top:10px" id="confirmSaved">I replaced the iCloud workbook</button><button class="secondary wide" style="margin-top:8px" id="notSaved">I did not save it</button></div>
+  </div>
+  <div class="card"><h3>Why the Mac will see it</h3><div class="muted">Once iCloud Drive syncs the updated workbook to your Mac, NZ Pilot Log Mac v4.1+ scans the workbook and imports the new rows into its local database. You do not need the phone and Mac app open at the same time.</div></div>
+</section>
+
+<section id="settings" class="panel">
+  <div class="card"><h2>Pilot details</h2><div class="form"><div class="grid2"><div class="field"><label>First / usual name</label><input id="pilotName"></div><div class="field"><label>Second name / surname</label><input id="secondName"></div></div><div class="field"><label>CAA client number</label><input id="clientNo"></div><div class="field"><label>Default PIC name in Excel</label><input id="defaultPic" placeholder="Self"></div></div></div>
+  <div class="card"><h2>Aircraft shortcuts</h2><div id="aircraftList" class="settings-list"></div><div class="grid2" style="margin-top:10px"><div class="field"><label>Type</label><input id="newAircraftType" autocapitalize="characters" placeholder="GA8"></div><div class="field"><label>Registration</label><input id="newAircraftReg" autocapitalize="characters" placeholder="ZK-MLF"></div></div><div class="field" style="margin-top:10px"><label>Engine</label><select id="newAircraftEngine"><option value="single">Single-engine</option><option value="multi">Multi-engine</option></select></div><button class="secondary wide" id="addAircraft" style="margin-top:10px">Add aircraft</button></div>
+  <div class="card"><h2>Common Details of Flight</h2><div id="detailsList" class="settings-list"></div><div class="field" style="margin-top:10px"><input id="newDetails" placeholder="WF - MF// - WF//"></div><button class="secondary wide" id="addDetails" style="margin-top:10px">Add shortcut</button></div>
+  <div class="card"><h2>Excel labels</h2><div class="grid2"><div class="field"><label>CAA column 16</label><input id="col16Label" value="AS FLIGHT INSTRUCTOR"></div><div class="field"><label>CAA column 17</label><input id="col17Label" value="IFR CROSS COUNTRY"></div></div></div>
+  <div class="card"><h2>Backup & setup</h2><div class="muted">Back up this phone’s local entries/settings as JSON. You can also import settings only from a Mac NZ Pilot Log backup.</div><div class="row" style="margin-top:10px"><button class="secondary" id="backupJson">Backup phone JSON</button><button class="secondary" id="importSettings">Import Mac settings</button><input id="settingsFile" type="file" accept="application/json,.json" hidden></div></div>
+  <div class="version">NZ Pilot Log Mobile v1.0.0</div>
+</section>
+</main>
+<button class="fab" id="fab">+</button>
+<nav class="bottomnav"><button class="navbtn on" data-go="home"><span class="ico">⌂</span>Home</button><button class="navbtn" data-go="add"><span class="ico">＋</span>Add</button><button class="navbtn" data-go="queue"><span class="ico">☷</span>Log</button><button class="navbtn" data-go="settings"><span class="ico">⚙︎</span>Settings</button></nav>
+</div>
+<script src="app-1.js"></script>
+<script src="app-2.js"></script>
+<script src="app-3.js"></script>
+<script src="app-4.js"></script>
+<script src="app-5.js"></script>
+<script src="app-6.js"></script>
+<script src="app-7.js"></script>
+<script src="app-8.js"></script>
+</body>
+</html>
