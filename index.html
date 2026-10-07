@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NZ Pilot Log">
 <title>NZ Pilot Log Mobile</title>
-<link rel="manifest" href="manifest.webmanifest">
-<link rel="apple-touch-icon" href="icon-192.png">
-<link rel="stylesheet" href="app.css">
+<link rel="manifest" href="manifest.webmanifest?v=1.0.5">
+<link rel="apple-touch-icon" href="icon-192.png?v=1.0.5">
+<link rel="stylesheet" href="app.css?v=1.0.5">
 </head>
 <body>
 <div class="app">
@@ -54,14 +54,17 @@
 </section>
 
 <section id="sync" class="panel">
-  <div class="card"><h2>Sync to Excel in iCloud</h2><div class="muted">Safari cannot silently overwrite an arbitrary iCloud Drive workbook, so this version asks you to choose the current workbook each time and then save the updated copy back to the same iCloud location.</div>
-    <div class="syncstep">Tap <strong>Choose Excel & prepare update</strong>, then select your current CAANZ Excel Pilot Logbook from iCloud Drive.</div>
-    <div class="syncstep">NZ Pilot Log appends all waiting phone flights to the next safe logbook rows.</div>
-    <div class="syncstep">Use the Share sheet → <strong>Save to Files</strong> → choose the same iCloud Drive folder and the same filename. Choose <strong>Replace</strong> if iOS asks.</div>
-    <div class="syncstep">Return here and confirm that you replaced the workbook. The flights are then marked synced on this phone.</div>
+  <div class="card"><h2>Sync to Excel in iCloud</h2><div class="muted">This version keeps each step separate so iPhone Safari has a clear user tap for choosing, preparing and saving the workbook.</div>
+    <div class="syncstep">Tap <strong>Choose Excel workbook</strong> and select your current CAANZ Excel Pilot Logbook from iCloud Drive.</div>
+    <div class="syncstep">Tap <strong>Prepare update</strong>. NZ Pilot Log adds all waiting phone flights to the next safe logbook rows.</div>
+    <div class="syncstep">Tap <strong>Save updated workbook</strong>, choose <strong>Save to Files</strong>, then save over the same iCloud Drive workbook and choose <strong>Replace</strong>.</div>
+    <div class="syncstep">Return here and tap <strong>I replaced the iCloud workbook</strong>.</div>
     <div id="syncStatus" class="notice info" style="margin:12px 0"></div>
-    <button class="primary wide" id="chooseExcel">Choose Excel & prepare update</button><input id="excelFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
-    <div id="preparedBox" class="hidden" style="margin-top:12px"><button class="secondary wide" id="shareUpdated">Share / Save updated workbook</button><div class="notice" style="margin-top:10px">Do not confirm until the updated workbook has been saved back over the current iCloud copy.</div><button class="primary wide" style="margin-top:10px" id="confirmSaved">I replaced the iCloud workbook</button><button class="secondary wide" style="margin-top:8px" id="notSaved">I did not save it</button></div>
+    <button class="primary wide" id="chooseExcel">Choose Excel workbook</button><input id="excelFile" type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+    <div id="selectedExcel" class="notice info hidden" style="margin-top:10px"></div>
+    <button class="secondary wide" id="prepareExcel" style="margin-top:10px" disabled>Prepare update</button>
+    <button class="primary wide" id="shareUpdated" style="margin-top:10px" disabled>Save updated workbook</button>
+    <div id="preparedBox" class="hidden" style="margin-top:10px"><div class="notice">Do not confirm until the updated workbook has been saved back over the current iCloud copy.</div><button class="primary wide" style="margin-top:10px" id="confirmSaved">I replaced the iCloud workbook</button><button class="secondary wide" style="margin-top:8px" id="notSaved">Cancel prepared update</button></div>
   </div>
   <div class="card"><h3>Why the Mac will see it</h3><div class="muted">Once iCloud Drive syncs the updated workbook to your Mac, NZ Pilot Log Mac v4.1+ scans the workbook and imports the new rows into its local database. You do not need the phone and Mac app open at the same time.</div></div>
 </section>
@@ -72,19 +75,19 @@
   <div class="card"><h2>Common Details of Flight</h2><div id="detailsList" class="settings-list"></div><div class="field" style="margin-top:10px"><input id="newDetails" placeholder="WF - MF// - WF//"></div><button class="secondary wide" id="addDetails" style="margin-top:10px">Add shortcut</button></div>
   <div class="card"><h2>Excel labels</h2><div class="grid2"><div class="field"><label>CAA column 16</label><input id="col16Label" value="AS FLIGHT INSTRUCTOR"></div><div class="field"><label>CAA column 17</label><input id="col17Label" value="IFR CROSS COUNTRY"></div></div></div>
   <div class="card"><h2>Backup & setup</h2><div class="muted">Back up this phone’s local entries/settings as JSON. You can also import settings only from a Mac NZ Pilot Log backup.</div><div class="row" style="margin-top:10px"><button class="secondary" id="backupJson">Backup phone JSON</button><button class="secondary" id="importSettings">Import Mac settings</button><input id="settingsFile" type="file" accept="application/json,.json" hidden></div></div>
-  <div class="version">NZ Pilot Log Mobile v1.0.0</div>
+  <div class="version">NZ Pilot Log Mobile v1.0.5</div>
 </section>
 </main>
 <button class="fab" id="fab">+</button>
 <nav class="bottomnav"><button class="navbtn on" data-go="home"><span class="ico">⌂</span>Home</button><button class="navbtn" data-go="add"><span class="ico">＋</span>Add</button><button class="navbtn" data-go="queue"><span class="ico">☷</span>Log</button><button class="navbtn" data-go="settings"><span class="ico">⚙︎</span>Settings</button></nav>
 </div>
-<script src="app-1.js"></script>
-<script src="app-2.js"></script>
-<script src="app-3.js"></script>
-<script src="app-4.js"></script>
-<script src="app-5.js"></script>
-<script src="app-6.js"></script>
-<script src="app-7.js"></script>
-<script src="app-8.js"></script>
+<script src="app-1.js?v=1.0.5"></script>
+<script src="app-2.js?v=1.0.5"></script>
+<script src="app-3.js?v=1.0.5"></script>
+<script src="app-4.js?v=1.0.5"></script>
+<script src="app-5.js?v=1.0.5"></script>
+<script src="app-6.js?v=1.0.5"></script>
+<script src="app-7.js?v=1.0.5"></script>
+<script src="app-8.js?v=1.0.5"></script>
 </body>
 </html>
