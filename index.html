@@ -8,9 +8,9 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NZ Pilot Log">
 <title>NZ Pilot Log Mobile</title>
-<link rel="manifest" href="manifest.webmanifest?v=1.0.9">
-<link rel="apple-touch-icon" href="icon-192.png?v=1.0.9">
-<link rel="stylesheet" href="app.css?v=1.0.9">
+<link rel="manifest" href="manifest.webmanifest?v=1.1.0">
+<link rel="apple-touch-icon" href="icon-192.png?v=1.1.0">
+<link rel="stylesheet" href="app.css?v=1.1.0">
 </head>
 <body>
 <div class="app">
@@ -18,7 +18,7 @@
 <main class="wrap">
 <section id="home" class="panel active">
   <div class="installtip notice info card"><strong>Install on iPhone:</strong> open this page in Safari, tap Share, then <strong>Add to Home Screen</strong>. Once installed, it works offline.</div>
-  <div class="statgrid"><div class="stat"><div class="label">Phone entries</div><div class="value" id="statEntries">0</div><div class="sub">stored locally</div></div><div class="stat"><div class="label">Waiting for Excel</div><div class="value" id="statPending">0</div><div class="sub">queued flights</div></div><div class="stat"><div class="label">Phone flight time</div><div class="value" id="statHours">0.0</div><div class="sub">hours</div></div><div class="stat"><div class="label">Last Excel sync</div><div class="value" id="statLastSync">—</div><div class="sub">confirmed save</div></div></div>
+  <div class="statgrid"><div class="stat"><div class="label">Waiting for Excel</div><div class="value" id="statPending">0</div><div class="sub">queued flights</div></div><div class="stat"><div class="label">Last Excel sync</div><div class="value" id="statLastSync">—</div><div class="sub">confirmed save</div></div></div><div class="card home-excel-card"><div class="row"><div><h2>Excel logbook totals</h2><div class="muted" id="homeExcelTotalsMeta">No Excel totals saved yet.</div></div><div class="spacer"></div><button class="secondary small" data-go="sync">Refresh</button></div><div id="homeExcelTotalsEmpty" class="muted" style="padding:12px 0">Choose your main Excel workbook on the Sync screen to load your totals here. They will stay on this page between updates.</div><div id="homeExcelTotalsGrid" class="excel-total-grid hidden"><div class="excel-total"><span>Total flight time</span><strong id="homeTotalFlight">0.0</strong><small>hours</small></div><div class="excel-total"><span>PIC</span><strong id="homePic">0.0</strong><small>hours</small></div><div class="excel-total"><span>Night</span><strong id="homeNight">0.0</strong><small>hours</small></div><div class="excel-total"><span>Instrument</span><strong id="homeInstrument">0.0</strong><small>actual + simulated</small></div></div></div>
   <div class="card"><div class="row"><div><h2>Quick log</h2><div class="muted">Log flights now, even offline. Sync several flights to your iCloud Excel logbook later.</div></div><div class="spacer"></div><button class="primary" data-go="add">Add flight</button></div><div class="quick" style="margin-top:12px"><div class="quick-title">Aircraft</div><div id="homeAircraft" class="chips"></div><div class="quick-title" style="margin-top:9px">Common Details of Flight</div><div id="homeDetails" class="chips"></div></div></div>
   <div class="card"><div class="row"><div><h2>Recent phone entries</h2><div class="muted">These are flights entered on this iPhone.</div></div><div class="spacer"></div><button class="secondary small" data-go="queue">View all</button></div><div id="recentFlights"></div></div>
 </section>
@@ -84,19 +84,19 @@
   <div class="card"><h2>Common Details of Flight</h2><div id="detailsList" class="settings-list"></div><div class="field" style="margin-top:10px"><input id="newDetails" placeholder="WF - MF// - WF//"></div><button class="secondary wide" id="addDetails" style="margin-top:10px">Add shortcut</button></div>
   <div class="card"><h2>Excel labels</h2><div class="grid2"><div class="field"><label>CAA column 16</label><input id="col16Label" value="AS FLIGHT INSTRUCTOR"></div><div class="field"><label>CAA column 17</label><input id="col17Label" value="IFR CROSS COUNTRY"></div></div></div>
   <div class="card"><h2>Backup & setup</h2><div class="muted">Back up this phone’s local entries/settings as JSON. You can also import settings only from a Mac NZ Pilot Log backup.</div><div class="row" style="margin-top:10px"><button class="secondary" id="backupJson">Backup phone JSON</button><button class="secondary" id="importSettings">Import Mac settings</button><input id="settingsFile" type="file" accept="application/json,.json" hidden></div></div>
-  <div class="version">NZ Pilot Log Mobile v1.0.5</div>
+  <div class="version">NZ Pilot Log Mobile v1.1.0</div>
 </section>
 </main>
 <button class="fab" id="fab">+</button>
 <nav class="bottomnav"><button class="navbtn on" data-go="home"><span class="ico">⌂</span>Home</button><button class="navbtn" data-go="add"><span class="ico">＋</span>Add</button><button class="navbtn" data-go="queue"><span class="ico">☷</span>Log</button><button class="navbtn" data-go="settings"><span class="ico">⚙︎</span>Settings</button></nav>
 </div>
-<script src="app-1.js?v=1.0.9"></script>
-<script src="app-2.js?v=1.0.9"></script>
-<script src="app-3.js?v=1.0.9"></script>
-<script src="app-4.js?v=1.0.9"></script>
-<script src="app-5.js?v=1.0.9"></script>
-<script src="app-6.js?v=1.0.9"></script>
-<script src="app-7.js?v=1.0.9"></script>
-<script src="app-8.js?v=1.0.9"></script>
+<script src="app-1.js?v=1.1.0"></script>
+<script src="app-2.js?v=1.1.0"></script>
+<script src="app-3.js?v=1.1.0"></script>
+<script src="app-4.js?v=1.1.0"></script>
+<script src="app-5.js?v=1.1.0"></script>
+<script src="app-6.js?v=1.1.0"></script>
+<script src="app-7.js?v=1.1.0"></script>
+<script src="app-8.js?v=1.1.0"></script>
 </body>
 </html>
